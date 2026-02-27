@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技術論文・記事検索</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 技術論文・記事検索</h1>
+            <p>AIで指定した技術分野の論文や記事を収集・要約</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="arxiv">📚 学術論文 (arXiv)</button>
+            <button class="tab-btn" data-tab="patents">📜 特許 (Patents)</button>
+            <button class="tab-btn" data-tab="web">🌐 ウェブ記事 (RSS)</button>
+        </div>
+
+        <!-- arXiv検索タブ -->
+        <div id="arxiv-tab" class="tab-content active">
+            <div class="search-form">
+                <div class="form-group">
+                    <label for="field">技術分野</label>
+                    <select id="field">
+                        <option value="">すべての分野</option>
+                        <option value="機械学習">機械学習</option>
+                        <option value="自然言語処理">自然言語処理</option>
+                        <option value="コンピュータビジョン">コンピュータビジョン</option>
+                        <option value="データサイエンス">データサイエンス</option>
+                        <option value="Web開発">Web開発</option>
+                        <option value="モバイル開発">モバイル開発</option>
+                        <option value="クラウドコンピューティング">クラウドコンピューティング</option>
+                        <option value="ブロックチェーン">ブロックチェーン</option>
+                        <option value="サイバーセキュリティ">サイバーセキュリティ</option>
+                        <option value="量子コンピューティング">量子コンピューティング</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="keywords">キーワード（オプション）</label>
+                    <input type="text" id="keywords" placeholder="例: transformer, GPT, deep learning">
+                </div>
+                <button id="search-btn" class="btn btn-primary">論文・記事を検索</button>
+            </div>
+        </div>
+
+        <!-- 特許検索タブ -->
+        <div id="patents-tab" class="tab-content">
+            <div class="search-form">
+                <div class="form-group">
+                    <label for="patent-query">検索キーワード</label>
+                    <input type="text" id="patent-query"
+                        placeholder="例: artificial intelligence, machine learning, neural network">
+                </div>
+                <button id="search-patents-btn" class="btn btn-primary">特許を検索</button>
+            </div>
+        </div>
+
+        <!-- ウェブ記事タブ -->
+        <div id="web-tab" class="tab-content">
+            <div class="website-manager">
+                <div class="manager-header">
+                    <h2>📰 記事ソース管理</h2>
+                    <div>
+                        <button id="reset-sources-btn" class="btn btn-secondary">リセット</button>
+                        <button id="add-source-btn" class="btn btn-primary">+ 追加</button>
+                    </div>
+                </div>
+
+                <div id="add-source-form" class="add-source-form" style="display: none;">
+                    <h3>新しいウェブサイトを追加</h3>
+                    <input type="text" id="source-name" placeholder="サイト名（例: TechCrunch）">
+                    <input type="url" id="source-url" placeholder="サイトURL（オプション）">
+                    <input type="url" id="source-rss" placeholder="RSS/Atom Feed URL *" required>
+                    <input type="text" id="source-category" placeholder="カテゴリ（例: AI, Web開発, セキュリティ）">
+                    <button id="confirm-add-btn" class="btn btn-primary">追加</button>
+                </div>
+
+                <div id="sources-list" class="sources-list"></div>
+            </div>
+            <button id="fetch-web-btn" class="btn btn-primary" disabled>記事を取得</button>
+        </div>
+
+        <!-- エラーメッセージ -->
+        <div id="error-message" class="error-message" style="display: none;"></div>
+
+        <!-- ローディング -->
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>読み込み中...</p>
+        </div>
+
+        <!-- 記事リスト -->
+        <div id="articles-container">
+            <div class="placeholder">
+                <p>技術分野を選択して、論文・記事を検索してください</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+
+</html>
