@@ -15,6 +15,7 @@ AIで指定した技術分野の論文や記事を収集し、要約を提供す
 - Python 3.8以上
 - OpenAI APIキー (オプション)
 - Ollama (ローカルLLMを使用する場合)
+- SERPAPI_KEY（Google Patentsで特許検索を行う場合）
 
 ## セットアップ
 
@@ -30,6 +31,7 @@ uv sync
 `.env.example`をコピーして`.env`を作成:
 
 ```bash
+cd flask-news
 cp .env.example .env
 ```
 
@@ -45,6 +47,9 @@ OPENAI_API_KEY=your-api-key-here
 # Ollama設定 (LLM_TYPE=ollamaの場合)
 OLLAMA_BASE_URL=http://localhost:11434
 OLLAMA_MODEL=llama3.2
+
+# Google Patents検索用SERPAPIキー
+SERPAPI_KEY=your-serpapi-key-here
 
 # Flask設定
 FLASK_ENV=development
@@ -62,14 +67,19 @@ uv run ./flask_news/app.py
 ## 使い方
 
 ### 学術論文を検索
-
 1. **📚 学術論文 (arXiv)** タブを選択
 2. 技術分野を選択（機械学習、自然言語処理など）
 3. オプションでキーワードを入力
 4. 「論文・記事を検索」ボタンをクリック
 
+### 特許検索
+1. **📝 特許検索** タブを選択
+2. 技術分野やキーワードを入力
+3. 「特許を検索」ボタンをクリック
+4. 検索結果から特許情報を閲覧
+※ Google Patentsで特許検索を行う場合は、SERPAPI_KEYの設定が必要です。
+[https://serpapi.com/](https://serpapi.com/)でAPIキーを取得してください。
 ### ウェブ記事を取得
-
 1. **🌐 ウェブ記事 (RSS)** タブを選択
 2. 必要に応じてRSSソースを追加・削除
 3. 取得したいソースにチェックを入れる
